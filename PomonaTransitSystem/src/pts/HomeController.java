@@ -58,4 +58,15 @@ public class HomeController {
 		stage.setScene(scene);
 		stage.show();
 	}
+	
+	@FXML
+	public void displayBusWindowAction(ActionEvent event) throws IOException {
+		loader = new FXMLLoader(getClass().getResource("/pts/q6/AddBusFX.fxml"));
+		root = loader.load(); 
+		
+		scene = new Scene(root);
+    	stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+		stage.setScene(scene);
+		stage.show();
+	}
 }

@@ -1,4 +1,4 @@
-package pts.q5;
+package pts.q6;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -13,37 +13,42 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;	
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-import model.Driver;
+import model.Bus;
 import pts.BackToHome;
 import pts.DBConnect;
 import pts.q3.DisplayStopsController;
 
-public class AddDriverController {
+public class AddBusController {
 	@FXML
-	private TextField driverNameInput;
+	private TextField busIdInput;
 	@FXML
-	private TextField driverPhoneNumberInput;
+	private TextField modelInput;
+	@FXML
+	private TextField yearInput;
 	
 	@FXML
-    private TableView<Driver> table;
+    private TableView<Bus> table;
     @FXML
-    private TableColumn<Driver, String> driverNameCol;
+    private TableColumn<Bus, String> busIDCol;
     @FXML
-    private TableColumn<Driver, String> drivePhoneNumberCol;
+    private TableColumn<Bus, String> modelCol;
+    @FXML
+    private TableColumn<Bus, String> yearCol;
     
-    ObservableList<Driver> driverList = FXCollections.observableArrayList();
+    ObservableList<Bus> busList = FXCollections.observableArrayList();
 	
 	String query = null;
     Connection connection = null ;
     PreparedStatement preparedStatement = null ;
     ResultSet resultSet = null ;
     
-    private String driverName;
-    private String driverPhoneNumber;
+    private String busID;
+    private String model;
+    private String year;
     
 	@FXML
 	public void backAction(ActionEvent event) throws SQLException, IOException {
@@ -55,46 +60,50 @@ public class AddDriverController {
     private void refreshTable() {
         try  {
         	System.out.println("");
-        	driverList.clear();
+        	busList.clear();
         	
-            query = "SELECT * FROM driver";
+            query = "SELECT * FROM bus";
             preparedStatement = connection.prepareStatement(query);
             resultSet = preparedStatement.executeQuery();
             
             while (resultSet.next()) {
-            	driverList.add(new Driver(
-                        resultSet.getString("DriverName"),
-                        resultSet.getString("DriverTelephoneNumber")
+            	busList.add(new Bus(
+                        resultSet.getString("BusID"),
+                        resultSet.getString("Model"),
+                        resultSet.getString("Year")
                ));
             }  
-            table.setItems(driverList);
+            table.setItems(busList);
         } 
         catch (SQLException ex) { // Handle exception
-            Logger.getLogger(AddDriverController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AddBusController.class.getName()).log(Level.SEVERE, null, ex);
         }                        
     }
     // Display trip schedule on the table
-    private void loadDrivers() {
+    private void loadBus() {
         connection = DBConnect.getConnect(); // Connect the database       
         refreshTable();
         // Display data on the columns
-        driverNameCol.setCellValueFactory(new PropertyValueFactory<>("driverName"));
-        drivePhoneNumberCol.setCellValueFactory(new PropertyValueFactory<>("driverPhoneNumber"));
+        busIDCol.setCellValueFactory(new PropertyValueFactory<>("busId"));
+        modelCol.setCellValueFactory(new PropertyValueFactory<>("model"));
+        yearCol.setCellValueFactory(new PropertyValueFactory<>("year"));
     }
 	
-	public void displayDriversAction(ActionEvent event) throws SQLException, IOException {
-		driverName = driverNameInput.getText();
-		driverPhoneNumber = driverPhoneNumberInput.getText();
+	public void displayBusAction(ActionEvent event) throws SQLException, IOException {
+		busID = busIdInput.getText();
+		model = modelInput.getText();
+		year = yearInput.getText();
 		
 		connection = DBConnect.getConnect();
-		query = "INSERT INTO `lab4`.`driver` (`DriverName`, `DriverTelephoneNumber`) VALUES (?, ?);";
+		query = "INSERT INTO `lab4`.`bus` (`BusID`, `Model`, `Year`) VALUES (?, ?, ?);";
         preparedStatement = connection.prepareStatement(query);
-        preparedStatement.setString(1, driverName);
-        preparedStatement.setString(2, driverPhoneNumber);
+        preparedStatement.setString(1, busID);
+        preparedStatement.setString(2, model);
+        preparedStatement.setString(3, year);
         preparedStatement.executeUpdate();
         preparedStatement.close();
         connection.close();
         
-        loadDrivers();
+        loadBus();
 	}
 }
