@@ -28,7 +28,7 @@ public class HomeController {
 
 	@FXML
 	public void displayTripScheduleAction(ActionEvent event) throws IOException {
-		loader = new FXMLLoader(getClass().getResource("DisplayTripSchedule.fxml"));
+		loader = new FXMLLoader(getClass().getResource("/pts/q1/DisplayTripSchedule.fxml"));
 		root = loader.load(); 
 		
 		scene = new Scene(root);

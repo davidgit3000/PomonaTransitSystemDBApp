@@ -1,4 +1,4 @@
-package pts;
+package pts.q1;
 
 import model.TripDisplay;
 import java.io.IOException;
@@ -11,6 +11,7 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import pts.BackToHome;
 import pts.DBConnect;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

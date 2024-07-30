@@ -1,7 +1,6 @@
-package pts;
+package pts.q1;
 
 import java.io.IOException;
-import pts.BackToHome;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -22,6 +21,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import model.TripDisplay;
+import pts.BackToHome;
 
 public class DisplayTripScheduleController {
 	@FXML
