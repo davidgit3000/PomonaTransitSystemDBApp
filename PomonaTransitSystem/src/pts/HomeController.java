@@ -35,6 +35,16 @@ public class HomeController {
     	stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 		stage.setScene(scene);
 		stage.show();
+	}
+	
+	@FXML
+	public void displaytripStopInfoAction(ActionEvent event) throws IOException {
+		loader = new FXMLLoader(getClass().getResource("/pts/q3/DisplayStopsFX.fxml"));
+		root = loader.load(); 
 		
+		scene = new Scene(root);
+    	stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+		stage.setScene(scene);
+		stage.show();
 	}
 }

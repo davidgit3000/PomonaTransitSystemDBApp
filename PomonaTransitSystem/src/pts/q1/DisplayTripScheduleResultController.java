@@ -87,7 +87,7 @@ public class DisplayTripScheduleResultController implements Initializable  {
         try  {
         	System.out.println("");
         	tripScheduleList.clear();
-            // Select all transactions with the id
+       
             query = "SELECT T1.ScheduledStartTime, T1.ScheduledArrivalTime, T1.DriverName, T1.BusID\r\n"
             		+ "FROM tripoffering AS T1\r\n"
             		+ "JOIN trip AS T2 ON T1.TripNumber = T2.TripNumber\r\n"
