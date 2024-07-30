@@ -30,7 +30,7 @@ import pts.BackToHome;
 import pts.DBConnect;
 import pts.q1.DisplayTripScheduleResultController;
 
-public class DisplayStopsController {
+public class DisplayStopsController implements Initializable  {
 	@FXML
 	private TextField tripNumberInput;
 	
@@ -53,6 +53,11 @@ public class DisplayStopsController {
     ResultSet resultSet = null ;
     
     String tripNumber;
+    
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+    	loadAllTripInfo();
+    }
     
 	@FXML
 	public void backAction(ActionEvent event) throws SQLException, IOException {
@@ -96,6 +101,37 @@ public class DisplayStopsController {
         stopNumberCol.setCellValueFactory(new PropertyValueFactory<>("stopNumber"));
         sequenceNumberCol.setCellValueFactory(new PropertyValueFactory<>("sequenceNumber"));
         drivingTimeCol.setCellValueFactory(new PropertyValueFactory<>("drivingTime"));
+    }
+    
+ // Display trip schedule on the table
+    private void loadAllTripInfo() {
+    	try  {
+        	System.out.println("");
+        	tripStopList.clear();
+        	
+        	connection = DBConnect.getConnect(); // Connect the database  
+            query = "SELECT * FROM tripstopinfo";
+            preparedStatement = connection.prepareStatement(query);
+            resultSet = preparedStatement.executeQuery();
+            
+            while (resultSet.next()) {
+            	tripStopList.add(new TripStopInfo(
+                        resultSet.getInt("TripNumber"),
+                        resultSet.getInt("StopNumber"),
+                        resultSet.getInt("SequenceNumber"),
+                        resultSet.getString("DrivingTime")));
+            }  
+            table.setItems(tripStopList);
+            
+            // Display data on the columns
+            tripNumberCol.setCellValueFactory(new PropertyValueFactory<>("tripNumber"));
+            stopNumberCol.setCellValueFactory(new PropertyValueFactory<>("stopNumber"));
+            sequenceNumberCol.setCellValueFactory(new PropertyValueFactory<>("sequenceNumber"));
+            drivingTimeCol.setCellValueFactory(new PropertyValueFactory<>("drivingTime"));
+        } 
+        catch (SQLException ex) { // Handle exception
+            Logger.getLogger(DisplayStopsController.class.getName()).log(Level.SEVERE, null, ex);
+        }     
     }
 	
 	public void displayStopsAction(ActionEvent event) throws SQLException, IOException {

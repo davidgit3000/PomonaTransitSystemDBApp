@@ -69,4 +69,15 @@ public class HomeController {
 		stage.setScene(scene);
 		stage.show();
 	}
+	
+	@FXML
+	public void displayDeleteBusWindowAction(ActionEvent event) throws IOException {
+		loader = new FXMLLoader(getClass().getResource("/pts/q7/DeleteBusFX.fxml"));
+		root = loader.load(); 
+		
+		scene = new Scene(root);
+    	stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+		stage.setScene(scene);
+		stage.show();
+	}
 }

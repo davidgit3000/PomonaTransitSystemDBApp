@@ -45,7 +45,7 @@
             <Font size="14.0" />
          </font>
       </Button>
-      <Button layoutX="312.0" layoutY="231.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="235.0" style="-fx-background-color: #cc1919;" text="Delete a bus" textFill="WHITE">
+      <Button layoutX="312.0" layoutY="231.0" mnemonicParsing="false" onAction="#displayDeleteBusWindowAction" prefHeight="29.0" prefWidth="235.0" style="-fx-background-color: #cc1919;" text="Delete a bus" textFill="WHITE">
          <font>
             <Font size="14.0" />
          </font>
