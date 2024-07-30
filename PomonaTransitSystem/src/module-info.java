@@ -3,6 +3,7 @@ module PomonaTransitSystem {
 	requires javafx.fxml;
 	requires javafx.graphics;
 	requires java.logging;
+	requires java.sql;
 	
 	opens pts to javafx.graphics, javafx.fxml;
 }

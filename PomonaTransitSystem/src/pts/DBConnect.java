@@ -1,4 +1,4 @@
-package helper;
+package pts;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -9,11 +9,11 @@ import java.util.logging.Logger;
 
 public class DBConnect {
     
-    private static String HOST = "127.0.0.1";
+    private static String HOST = "localhost";
         private static int PORT = 3306;
-        private static String DB_NAME = "atm";
+        private static String DB_NAME = "lab4";
         private static String USERNAME = "root";
-        private static String PASSWORD = "Boyvtkg@123";
+        private static String PASSWORD = "Anhbankarikk10!";
         private static Connection connection ;
         
         
