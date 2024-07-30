@@ -27,7 +27,7 @@ public class HomeController {
 	private Parent root;
 
 	@FXML
-	public void displayTripScheduleAction(ActionEvent event) throws IOException {
+	public void displayTripScheduleWindowAction(ActionEvent event) throws IOException {
 		loader = new FXMLLoader(getClass().getResource("/pts/q1/DisplayTripSchedule.fxml"));
 		root = loader.load(); 
 		
@@ -38,8 +38,19 @@ public class HomeController {
 	}
 	
 	@FXML
-	public void displaytripStopInfoAction(ActionEvent event) throws IOException {
+	public void displayTripStopInfoWindowAction(ActionEvent event) throws IOException {
 		loader = new FXMLLoader(getClass().getResource("/pts/q3/DisplayStopsFX.fxml"));
+		root = loader.load(); 
+		
+		scene = new Scene(root);
+    	stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+		stage.setScene(scene);
+		stage.show();
+	}
+	
+	@FXML
+	public void displayDriversWindowAction(ActionEvent event) throws IOException {
+		loader = new FXMLLoader(getClass().getResource("/pts/q5/AddDriverFX.fxml"));
 		root = loader.load(); 
 		
 		scene = new Scene(root);
