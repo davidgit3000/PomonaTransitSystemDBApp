@@ -27,17 +27,17 @@ public class Main extends Application {
 			primaryStage.setScene(scene);
 			primaryStage.show();
 			
-			String query = null;
-		    Connection connection = null ;
-		    PreparedStatement preparedStatement = null ;
-		    ResultSet resultSet = null ;
-		    
-		    connection = DBConnect.getConnect();
-	        preparedStatement = connection.prepareStatement("SELECT * FROM lab4.demo");
-	        resultSet = preparedStatement.executeQuery();
-	        resultSet.next();
-	        String name = resultSet.getString("Name");
-	        System.out.println(name);
+//			String query = null;
+//		    Connection connection = null ;
+//		    PreparedStatement preparedStatement = null ;
+//		    ResultSet resultSet = null ;
+//		    
+//		    connection = DBConnect.getConnect();
+//	        preparedStatement = connection.prepareStatement("SELECT * FROM lab4.demo");
+//	        resultSet = preparedStatement.executeQuery();
+//	        resultSet.next();
+//	        String name = resultSet.getString("Name");
+//	        System.out.println(name);
 		} catch(IOException ex) {
 			 Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
 		}

@@ -6,4 +6,5 @@ module PomonaTransitSystem {
 	requires java.sql;
 	
 	opens pts to javafx.graphics, javafx.fxml;
+	opens model to javafx.graphics, javafx.fxml, javafx.base;
 }

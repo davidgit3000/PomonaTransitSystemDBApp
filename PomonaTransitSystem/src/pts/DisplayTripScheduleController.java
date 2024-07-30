@@ -18,10 +18,19 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import model.TripDisplay;
 
 public class DisplayTripScheduleController {
+	@FXML
+	private TextField startLocationNameInput;
+	@FXML
+	private TextField destinationNameInput;
+	@FXML
+	private TextField dateInput;
+	
 	FXMLLoader loader;
 	private Stage stage;
 	private Scene scene;
@@ -37,14 +46,14 @@ public class DisplayTripScheduleController {
 		loader = new FXMLLoader(getClass().getResource("DisplayTripScheduleResult.fxml"));
 		root = loader.load(); 
 		
-		// Get data from input fields
-		// Set data input to 
-		// Run SQL query
-		// Send result to the result window
+		String startLoc = startLocationNameInput.getText();
+		String destLoc = destinationNameInput.getText();
+		String date = dateInput.getText();
 		
-//		WithdrawController withdrawController = loader.getController();
-//    	withdrawController.setID(id);     
-    	
+		DisplayTripScheduleResultController tripController = loader.getController();
+		tripController.setData(startLoc, destLoc, date);
+		tripController.loadTrip();
+		
     	scene = new Scene(root);
     	stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 		stage.setScene(scene);
