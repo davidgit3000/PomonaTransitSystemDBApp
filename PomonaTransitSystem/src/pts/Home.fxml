@@ -52,10 +52,10 @@
       </Button>
       <MenuButton alignment="CENTER" layoutX="53.0" layoutY="278.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="235.0" text="Edit Trip Schedule">
         <items>
-          <MenuItem mnemonicParsing="false" text="Delete a trip" />
-          <MenuItem mnemonicParsing="false" text="Add a trip offering" />
-            <MenuItem mnemonicParsing="false" text="Change a driver" />
-            <MenuItem mnemonicParsing="false" text="Change a bus" />
+          <MenuItem mnemonicParsing="false" onAction="#displayDeleteTripOfferingWindowAction" text="Delete a trip" />
+          <MenuItem mnemonicParsing="false" onAction="#displayAddTripOfferingWindowAction" text="Add a trip offering" />
+            <MenuItem mnemonicParsing="false" onAction="#displayChangeDriverWindowAction" text="Change a driver" />
+            <MenuItem mnemonicParsing="false" onAction="#displayChangeBusWindowAction" text="Change a bus" />
         </items>
          <font>
             <Font size="14.0" />
