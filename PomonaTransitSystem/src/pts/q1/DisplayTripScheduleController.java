@@ -57,6 +57,7 @@ public class DisplayTripScheduleController {
     	scene = new Scene(root);
     	stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 		stage.setScene(scene);
+		stage.setTitle("Trip Schedule Result");
 		stage.show();
 	}
 }

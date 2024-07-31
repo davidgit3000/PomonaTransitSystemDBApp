@@ -36,6 +36,6 @@
         </columns>
       </TableView>
        <Button layoutX="420.0" layoutY="338.0" mnemonicParsing="false" onAction="#backAction" text="Back to Home" />
-      <Button layoutX="531.0" layoutY="338.0" mnemonicParsing="false" onAction="#displayDriversAction" text="Add" />
+      <Button layoutX="531.0" layoutY="338.0" mnemonicParsing="false" onAction="#addDriverAction" text="Add" />
    </children>
 </AnchorPane>
