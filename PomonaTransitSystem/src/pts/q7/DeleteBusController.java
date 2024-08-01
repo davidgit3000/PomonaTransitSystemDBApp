@@ -75,7 +75,7 @@ public class DeleteBusController implements Initializable {
 			}
 			table.setItems(busList);
 		} catch (SQLException ex) { // Handle exception
-			Logger.getLogger(AddBusController.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(DeleteBusController.class.getName()).log(Level.SEVERE, null, ex);
 		}
 	}
 
@@ -93,22 +93,31 @@ public class DeleteBusController implements Initializable {
 		try {
 			busID = busIdInput.getText();
 
-			connection = DBConnect.getConnect();
-			query = "DELETE FROM `lab4`.`bus` WHERE BusID = ?;";
-			preparedStatement = connection.prepareStatement(query);
-			preparedStatement.setString(1, busID);
-			preparedStatement.executeUpdate();
-			preparedStatement.close();
-			connection.close();
+			if (busID.equals("")) {
+				Alert alert = new Alert(AlertType.WARNING);
+				alert.setTitle("Warning");
+				alert.setHeaderText(null);
+				alert.setContentText("Missing data input. Please enter Bus ID");
+				alert.showAndWait();
+			} else {
+				connection = DBConnect.getConnect();
+				query = "DELETE FROM `lab4`.`bus` WHERE BusID = ?;";
+				preparedStatement = connection.prepareStatement(query);
+				preparedStatement.setString(1, busID);
+				preparedStatement.executeUpdate();
+				preparedStatement.close();
+				connection.close();
 
-			Alert alert = new Alert(AlertType.INFORMATION);
-			alert.setTitle("Add Driver");
-			alert.setHeaderText(null);
-			alert.setContentText("Bus ID added successfully!");
-			alert.showAndWait();
+				Alert alert = new Alert(AlertType.INFORMATION);
+				alert.setTitle("Remove Bus");
+				alert.setHeaderText(null);
+				alert.setContentText("Bus ID removed successfully!");
+				alert.showAndWait();
 
-			busIdInput.clear();
-			loadBus();
+				busIdInput.clear();
+				loadBus();
+			}
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 			Alert alert = new Alert(AlertType.ERROR);

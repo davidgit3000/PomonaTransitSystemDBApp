@@ -110,30 +110,39 @@ public class AddDriverController implements Initializable {
 			String driverName = driverNameInput.getText();
 			String driverPhoneNumber = driverPhoneNumberInput.getText();
 
-			connection = DBConnect.getConnect();
-			query = "INSERT INTO `lab4`.`driver` (`DriverName`, `DriverTelephoneNumber`) VALUES (?, ?);";
-			preparedStatement = connection.prepareStatement(query);
-			preparedStatement.setString(1, driverName);
-			preparedStatement.setString(2, driverPhoneNumber);
-			preparedStatement.executeUpdate();
+			if (driverName.equals("") || driverPhoneNumber.equals("")) {
+				Alert alert = new Alert(AlertType.WARNING);
+				alert.setTitle("Warning");
+				alert.setHeaderText(null);
+				alert.setContentText("Missing data field(s). Please fill out all the fields");
+				alert.showAndWait();
+			} else {
+				connection = DBConnect.getConnect();
+				query = "INSERT INTO `lab4`.`driver` (`DriverName`, `DriverTelephoneNumber`) VALUES (?, ?);";
+				preparedStatement = connection.prepareStatement(query);
+				preparedStatement.setString(1, driverName);
+				preparedStatement.setString(2, driverPhoneNumber);
+				preparedStatement.executeUpdate();
 
-			Alert alert = new Alert(AlertType.INFORMATION);
-			alert.setTitle("Add Driver");
-			alert.setHeaderText(null);
-			alert.setContentText("Driver added successfully!");
-			alert.showAndWait();
+				Alert alert = new Alert(AlertType.INFORMATION);
+				alert.setTitle("Add Driver");
+				alert.setHeaderText(null);
+				alert.setContentText("Driver added successfully!");
+				alert.showAndWait();
 
-			driverNameInput.clear();
-			driverPhoneNumberInput.clear();
+				driverNameInput.clear();
+				driverPhoneNumberInput.clear();
 
-			loadDrivers();
-			for (Driver driver : driverList) {
-				if (driver.getDriverName().equals(driverName) && driver.getDriverPhoneNumber().equals(driverPhoneNumber)) {
-					driver.setUpdated(true);
-					break;
+				loadDrivers();
+				for (Driver driver : driverList) {
+					if (driver.getDriverName().equals(driverName)
+							&& driver.getDriverPhoneNumber().equals(driverPhoneNumber)) {
+						driver.setUpdated(true);
+						break;
+					}
 				}
+				table.refresh();
 			}
-			table.refresh();
 		} catch (SQLException e) {
 			e.printStackTrace();
 			Alert alert = new Alert(AlertType.ERROR);

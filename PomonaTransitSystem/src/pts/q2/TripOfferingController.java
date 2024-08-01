@@ -15,10 +15,13 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import model.TripDisplay;
@@ -30,7 +33,7 @@ public class TripOfferingController implements Initializable {
 	@FXML
 	protected TextField tripNumberInput;
 	@FXML
-	protected TextField dateInput;
+	protected DatePicker datePicker;
 	@FXML
 	protected TextField scheduledStartTimeInput;
 
@@ -76,7 +79,7 @@ public class TripOfferingController implements Initializable {
 			query = "SELECT * FROM tripoffering";
 			preparedStatement = connection.prepareStatement(query);
 			resultSet = preparedStatement.executeQuery();
-
+			
 			while (resultSet.next()) {
 				tripOfferingList.add(new TripDisplay(resultSet.getInt("TripNumber"), resultSet.getString("Date"),
 						resultSet.getString("ScheduledStartTime"), resultSet.getString("ScheduledArrivalTime"),

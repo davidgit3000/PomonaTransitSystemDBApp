@@ -75,4 +75,16 @@ public class HomeController {
 	public void displayAddTripOfferingWindowAction(ActionEvent event) throws IOException {
 		displayScene(event, "/pts/q2/AddTripOfferingFX.fxml", "Add Trip Offering", true);
 	}
+	
+	@FXML
+	public void displayTripOfferingWindowAction(ActionEvent event) throws IOException {
+		displayScene(event, "/pts/q8/DisplayTripOfferingFX.fxml", "Display Trip Offerings", false);
+	}
+	
+	@FXML
+	public void displayWeeklyScheduleWindowAction(ActionEvent event) throws IOException {
+		displayScene(event, "/pts/q4/WeeklyScheduleFX.fxml", "Display Weely Schedule of a Driver", false);
+	}
+	
+	
 }

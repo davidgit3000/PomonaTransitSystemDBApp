@@ -1,18 +1,20 @@
-package pts.q1;
+package pts.q4;
 
-import model.TripDisplay;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import pts.BackToHome;
-import pts.DBConnect;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -23,29 +25,37 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import model.TripDisplay;
+import model.TripStopInfo;
+import pts.BackToHome;
+import pts.DBConnect;
+import pts.q1.DisplayTripScheduleResultController;
 
-public class DisplayTripScheduleResultController implements Initializable  {
+public class WeeklyScheduleController  {
 	@FXML
-	Label startLocationNameLabel;
+	Label driverNameLabel;
 	@FXML
-	Label destLocationNameLabel;
+	TextField textField;
 	@FXML
-	Label dateLabel;
+	DatePicker datePicker;
 	@FXML
     private TableView<TripDisplay> table;
+    @FXML
+    private TableColumn<TripDisplay, String> tripNumberCol;
+    @FXML
+    private TableColumn<TripDisplay, String> dateCol;
     @FXML
     private TableColumn<TripDisplay, String> scheduledStartTimeCol;
     @FXML
     private TableColumn<TripDisplay, String> scheduledArrivalTimeCol;
-    @FXML
-    private TableColumn<TripDisplay, String> driverNameCol;
     @FXML
     private TableColumn<TripDisplay, String> busIDCol;
     
@@ -56,23 +66,20 @@ public class DisplayTripScheduleResultController implements Initializable  {
     PreparedStatement preparedStatement = null ;
     ResultSet resultSet = null ;
     
-    private String startLoc;
-    private String destLoc;
-    private String date;
-    
-    public void setData(String startLoc, String destLoc, String date) {
-    	this.startLoc = startLoc;
-    	this.destLoc = destLoc;
-    	this.date = date;
-    	
-    	// Append the new text to the labels
-        startLocationNameLabel.setText(startLocationNameLabel.getText() + startLoc);
-        destLocationNameLabel.setText(destLocationNameLabel.getText() + destLoc);
-        dateLabel.setText(dateLabel.getText() + " " + date);
-    }
-    
-    public boolean isInvalidData() throws SQLException {
-    	return !resultSet.next();
+    @FXML
+	public void viewScheduleAction(ActionEvent event) throws SQLException, IOException {
+    	String driverName = textField.getText();
+		LocalDate myDate = datePicker.getValue();
+    	if(driverName.equals("") || myDate == null) {
+    		Alert alert = new Alert(AlertType.WARNING);
+			alert.setTitle("Warning");
+			alert.setHeaderText(null);
+			alert.setContentText("Missing data field(s). Please fill out all the fields");
+			alert.showAndWait();
+    	} else {
+    		String myFormattedDate = myDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+    		loadTrip(driverName, myFormattedDate);
+    	}
     }
     
     @FXML
@@ -81,27 +88,26 @@ public class DisplayTripScheduleResultController implements Initializable  {
 		home.backToHome(event);
 	}
     
-	// Run when opening the page
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-        loadTrip();
-    }
     // Get the data from the database
-    @FXML
-    private void refreshTable() {
+    private void refreshTable(String driverName, String date) {
         try  {
-        	System.out.println("");
+        	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        	LocalDate monday = LocalDate.parse(date, formatter).with(DayOfWeek.MONDAY);
+        	LocalDate sunday = LocalDate.parse(date, formatter).with(DayOfWeek.SUNDAY);
+
+        	// Convert LocalDate back to String
+        	String mondayString = monday.format(formatter);
+        	String sundayString = sunday.format(formatter);
+        	driverNameLabel.setText("Weekly Schedule for: " + driverName);
         	tripScheduleList.clear();
        
-            query = "SELECT T1.ScheduledStartTime, T1.ScheduledArrivalTime, T1.DriverName, T1.BusID\r\n"
-            		+ "FROM tripoffering AS T1\r\n"
-            		+ "JOIN trip AS T2 ON T1.TripNumber = T2.TripNumber\r\n"
-            		+ "WHERE T2.StartLocationName = ? AND T2.DestinationName = ? AND T1.Date = ?;";
+            query = "SELECT TripNumber, `Date`, ScheduledStartTime, ScheduledArrivalTime, BusID\r\n"
+            		+ "FROM tripoffering \r\n"
+            		+ "WHERE DriverName = ? AND (`Date` BETWEEN ? AND ?);";
             preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, startLoc);
-            preparedStatement.setString(2, destLoc);
-            preparedStatement.setString(3, date);
+            preparedStatement.setString(1, driverName);
+            preparedStatement.setString(2, mondayString);
+            preparedStatement.setString(3, sundayString);
             resultSet = preparedStatement.executeQuery();
             
             if (!resultSet.next()) {
@@ -111,12 +117,16 @@ public class DisplayTripScheduleResultController implements Initializable  {
     			alert.setContentText("No records match the specified data");
     			alert.showAndWait();
             }
-
+            
             while (resultSet.next()) {
+            	Date myDate = resultSet.getDate("Date");	
+            	String date_str = myDate.toString();
             	tripScheduleList.add(new TripDisplay(
+            			resultSet.getInt("TripNumber"),
+            			date_str,
                         resultSet.getString("ScheduledStartTime"),
                         resultSet.getString("ScheduledArrivalTime"),
-                        resultSet.getString("DriverName"),
+                        "",
                         resultSet.getString("BusID")));
             }  
             table.setItems(tripScheduleList);
@@ -126,13 +136,14 @@ public class DisplayTripScheduleResultController implements Initializable  {
         }                        
     }
     // Display trip schedule on the table
-    public void loadTrip() {
+    public void loadTrip(String driverName, String date) {
         connection = DBConnect.getConnect(); // Connect the database       
-        refreshTable();
+        refreshTable(driverName, date);
         // Display data on the columns
+        tripNumberCol.setCellValueFactory(new PropertyValueFactory<>("tripNumber"));
+        dateCol.setCellValueFactory(new PropertyValueFactory<>("date"));
         scheduledStartTimeCol.setCellValueFactory(new PropertyValueFactory<>("scheduledStartTime"));
         scheduledArrivalTimeCol.setCellValueFactory(new PropertyValueFactory<>("scheduledArrivalTime"));
-        driverNameCol.setCellValueFactory(new PropertyValueFactory<>("driverName"));
         busIDCol.setCellValueFactory(new PropertyValueFactory<>("busId"));
     }
 }

@@ -11,8 +11,9 @@ public class TripDisplay {
 	private String driverName;
 	private String busId;
 	private BooleanProperty updated;
-	
-	public TripDisplay(int tripNumber, String date, String scheduledStartTime, String scheduledArrivalTime, String driverName, String busId) {
+
+	public TripDisplay(int tripNumber, String date, String scheduledStartTime, String scheduledArrivalTime,
+			String driverName, String busId) {
 		this.tripNumber = tripNumber;
 		this.date = date;
 		this.scheduledStartTime = scheduledStartTime;
@@ -21,11 +22,19 @@ public class TripDisplay {
 		this.busId = busId;
 		this.updated = new SimpleBooleanProperty(false);
 	}
-	
+
 	public TripDisplay(int tripNumber, String date, String scheduledStartTime) {
 		this.tripNumber = tripNumber;
 		this.date = date;
 		this.scheduledStartTime = scheduledStartTime;
+		this.updated = new SimpleBooleanProperty(false);
+	}
+	
+	public TripDisplay(int tripNumber, String date, String scheduledStartTime, String scheduledArrivalTime) {
+		this.tripNumber = tripNumber;
+		this.date = date;
+		this.scheduledStartTime = scheduledStartTime;
+		this.scheduledArrivalTime = scheduledArrivalTime;
 		this.updated = new SimpleBooleanProperty(false);
 	}
 
@@ -95,5 +104,11 @@ public class TripDisplay {
 
 	public BooleanProperty updatedProperty() {
 		return updated;
+	}
+
+	@Override
+	public String toString() {
+		return tripNumber + ", " + date + ", " + scheduledStartTime + ", " + scheduledArrivalTime + ", " + driverName
+				+ ", " + busId;
 	}
 }

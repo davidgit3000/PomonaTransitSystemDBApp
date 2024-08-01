@@ -21,7 +21,7 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <TextField fx:id="busIdInput" layoutX="71.0" layoutY="64.0" prefHeight="25.0" prefWidth="66.0" />
+      <TextField fx:id="busIdInput" layoutX="71.0" layoutY="64.0" prefHeight="25.0" prefWidth="66.0" promptText="B#" />
       <Label layoutX="166.0" layoutY="67.0" text="Model:">
          <font>
             <Font size="14.0" />

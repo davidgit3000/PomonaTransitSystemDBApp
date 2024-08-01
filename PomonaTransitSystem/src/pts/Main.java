@@ -9,18 +9,20 @@ import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 
-import pts.DBConnect;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) throws SQLException, IOException{
 		try {
+			// Load the icon image
+	        Image icon = new Image(getClass().getResourceAsStream("/pts/pts-logo.png"));
+	        // Set the icon for the stage
+	        primaryStage.getIcons().add(icon);
+	        
 			Parent root = FXMLLoader.load(getClass().getResource("Home.fxml"));
 			Scene scene = new Scene(root);
 			scene.setFill(Color.TRANSPARENT);

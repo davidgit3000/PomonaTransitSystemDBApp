@@ -121,32 +121,40 @@ public class AddBusController implements Initializable {
 			model = modelInput.getText();
 			year = yearInput.getText();
 
-			connection = DBConnect.getConnect();
-			query = "INSERT INTO `lab4`.`bus` (`BusID`, `Model`, `Year`) VALUES (?, ?, ?);";
-			preparedStatement = connection.prepareStatement(query);
-			preparedStatement.setString(1, busID);
-			preparedStatement.setString(2, model);
-			preparedStatement.setString(3, year);
-			preparedStatement.executeUpdate();
+			if (busID.equals("") || model.equals("") || year.equals("")) {
+				Alert alert = new Alert(AlertType.WARNING);
+				alert.setTitle("Warning");
+				alert.setHeaderText(null);
+				alert.setContentText("Missing data field(s). Please fill out all the fields");
+				alert.showAndWait();
+			} else {
+				connection = DBConnect.getConnect();
+				query = "INSERT INTO `lab4`.`bus` (`BusID`, `Model`, `Year`) VALUES (?, ?, ?);";
+				preparedStatement = connection.prepareStatement(query);
+				preparedStatement.setString(1, busID);
+				preparedStatement.setString(2, model);
+				preparedStatement.setString(3, year);
+				preparedStatement.executeUpdate();
 
-			Alert alert = new Alert(AlertType.INFORMATION);
-			alert.setTitle("Add Driver");
-			alert.setHeaderText(null);
-			alert.setContentText("Bus ID added successfully!");
-			alert.showAndWait();
+				Alert alert = new Alert(AlertType.INFORMATION);
+				alert.setTitle("Add Bus");
+				alert.setHeaderText(null);
+				alert.setContentText("Bus ID added successfully!");
+				alert.showAndWait();
 
-			busIdInput.clear();
-			modelInput.clear();
-			yearInput.clear();
+				busIdInput.clear();
+				modelInput.clear();
+				yearInput.clear();
 
-			loadBus();
-			for (Bus bus : busList) {
-				if (bus.getBusId().equals(busID) && bus.getModel().equals(model) && bus.getYear().equals(year)) {
-					bus.setUpdated(true);
-					break;
+				loadBus();
+				for (Bus bus : busList) {
+					if (bus.getBusId().equals(busID) && bus.getModel().equals(model) && bus.getYear().equals(year)) {
+						bus.setUpdated(true);
+						break;
+					}
 				}
+				table.refresh();
 			}
-			table.refresh();
 		} catch (SQLException e) {
 			e.printStackTrace();
 			Alert alert = new Alert(AlertType.ERROR);

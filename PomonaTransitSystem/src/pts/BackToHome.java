@@ -25,6 +25,7 @@ public class BackToHome {
     	scene = new Scene(root);
     	stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 		stage.setScene(scene);
+		stage.setTitle("Home");
 		stage.show();
 	}
 }
