@@ -53,7 +53,7 @@
       <MenuButton alignment="CENTER" layoutX="52.0" layoutY="185.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="235.0" text="Edit Trip Schedule">
         <items>
           <MenuItem mnemonicParsing="false" onAction="#displayDeleteTripOfferingWindowAction" text="Delete a trip" />
-          <MenuItem mnemonicParsing="false" onAction="#displayAddTripOfferingWindowAction" text="Add a trip offering" />
+          <MenuItem mnemonicParsing="false" onAction="#displayAddTripOfferingWindowAction" text="Add trip offering(s)" />
             <MenuItem mnemonicParsing="false" onAction="#displayChangeDriverWindowAction" text="Change a driver" />
             <MenuItem mnemonicParsing="false" onAction="#displayChangeBusWindowAction" text="Change a bus" />
         </items>
