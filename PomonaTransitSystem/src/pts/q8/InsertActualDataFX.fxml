@@ -60,7 +60,7 @@
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="actualStartTimeInput" prefHeight="26.0" prefWidth="367.0" />
+                  <TextField fx:id="actualStartTimeInput" prefHeight="26.0" prefWidth="367.0" promptText="HH:MM(am/pm)" />
                </children>
             </HBox>
             <HBox alignment="CENTER" prefHeight="26.0" prefWidth="600.0" spacing="25.0">
@@ -70,7 +70,7 @@
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="actualArrivalTimeInput" prefHeight="53.0" prefWidth="367.0" />
+                  <TextField fx:id="actualArrivalTimeInput" prefHeight="53.0" prefWidth="367.0" promptText="HH:MM(am/pm)" />
                </children>
             </HBox>
             <HBox alignment="CENTER" prefHeight="26.0" prefWidth="600.0" spacing="22.0">

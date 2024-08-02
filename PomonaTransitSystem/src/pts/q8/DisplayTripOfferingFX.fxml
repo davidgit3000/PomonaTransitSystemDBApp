@@ -41,7 +41,7 @@
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="scheduledStartTimeInput" prefHeight="25.0" prefWidth="124.0" />
+                  <TextField fx:id="scheduledStartTimeInput" prefHeight="25.0" prefWidth="124.0" promptText="HH:MM(am/pm)" />
                   <Label text="Stop Number:">
                      <font>
                         <Font size="14.0" />
